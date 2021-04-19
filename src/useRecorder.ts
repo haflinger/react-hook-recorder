@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const defaultContraints: MediaStreamConstraints = {
   audio: true,
@@ -13,17 +13,16 @@ type MediaRecorderOptions = {
 };
 
 function useRecorder(
-  constraints?: Partial<MediaStreamConstraints>,
-  options?: Partial<MediaRecorderOptions>
+  mediaStreamConstraints?: Partial<MediaStreamConstraints>,
+  mediaRecorderOptions?: Partial<MediaRecorderOptions>
 ) {
-  const videoRef = useRef<HTMLVideoElement>();
   const mediaRecorderRef = useRef<MediaRecorder>();
   const streamRef = useRef<MediaStream>();
   const [recording, setRecording] = useState<boolean>(false);
   const [ready, setReady] = useState<boolean>(false);
 
   const register = useCallback((element: HTMLVideoElement) => {
-    videoRef.current = element;
+    initStream(element).then(initMediaRecorder);
   }, []);
 
   const startRecording = useCallback(() => {
@@ -48,15 +47,13 @@ function useRecorder(
     []
   );
 
-  const initStream = useCallback(async () => {
+  const initStream = useCallback(async (videoRef: HTMLVideoElement) => {
     try {
       streamRef.current = await navigator.mediaDevices.getUserMedia({
         ...defaultContraints,
-        ...(constraints ? { ...constraints } : {}),
+        ...(mediaStreamConstraints ? { ...mediaStreamConstraints } : {}),
       });
-      if (videoRef?.current) {
-        videoRef.current.srcObject = streamRef.current;
-      }
+      videoRef.srcObject = streamRef.current;
       return streamRef.current;
     } catch {
       throw new Error("Unable to get stream");
@@ -64,18 +61,20 @@ function useRecorder(
   }, []);
 
   const initMediaRecorder = useCallback((stream: MediaStream) => {
-    if (options?.mimeType && !MediaRecorder.isTypeSupported(options.mimeType)) {
-      console.warn(`MIME type ${options.mimeType} not supported`);
+    if (
+      mediaRecorderOptions?.mimeType &&
+      !MediaRecorder.isTypeSupported(mediaRecorderOptions.mimeType)
+    ) {
+      console.warn(`MIME type ${mediaRecorderOptions.mimeType} not supported`);
     }
 
-    const recorder = new MediaRecorder(stream, { ...options } || {});
+    const recorder = new MediaRecorder(
+      stream,
+      { ...mediaRecorderOptions } || {}
+    );
     mediaRecorderRef.current = recorder;
     setReady(true);
   }, []);
-
-  useEffect(() => {
-    initStream().then(initMediaRecorder);
-  }, [initStream, initMediaRecorder]);
 
   if (!navigator.mediaDevices) {
     throw new Error("Navigator is not compatible");

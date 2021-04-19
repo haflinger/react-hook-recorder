@@ -2,16 +2,17 @@
 
 A simple react hook using [MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder)
 
-## Preview
+## Demo
 
 https://codesandbox.io/s/react-hook-recorder-gbz6z
 
 ## Example
 
 ```javascript
+import { useState, useCallback } from "react";
 import useRecorder from "react-hook-recorder";
 
-function VideoRTC() {
+function Recorder() {
   const [url, setUrl] = useState("");
   const onStop = useCallback((blob, blobUrl) => {
     setUrl(blobUrl);
@@ -46,4 +47,27 @@ function VideoRTC() {
     </div>
   );
 }
+
+export default Recorder;
 ```
+
+## API
+
+### _`useRecorder`_
+
+#### `Args` (mediaStreamConstraints: MediaStreamConstraints, mediaRecorderOptions: MediaRecorderOptions)
+
+| Property               | Required | Type     | Description                                                                                                |
+| ---------------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------- |
+| mediaStreamConstraints | false    | `object` | [`MediaStreamConstraints`](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints) object |
+| mediaRecorderOptions   | false    | `object` | [`MediaRecorder`](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder) object     |
+
+#### `Returns` (object)
+
+| Property       | Type            | Description                        |
+| -------------- | --------------- | ---------------------------------- |
+| mediaRecorder  | `MediaRecorder` | MediaRecorder instance ref         |
+| startRecording | `function`      | function to start recording        |
+| stopRecording  | `function`      | function to stop recording         |
+| register       | `function`      | function to register video element |
+| ready          | `boolean`       | true when stream is ready          |

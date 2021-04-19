@@ -1,6 +1,6 @@
 {
   "name": "react-hook-recorder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React based hook to use native MediaRecorder API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
