@@ -64,10 +64,18 @@ export default Recorder;
 
 #### `Returns` (object)
 
-| Property       | Type            | Description                        |
-| -------------- | --------------- | ---------------------------------- |
-| mediaRecorder  | `MediaRecorder` | MediaRecorder instance ref         |
-| startRecording | `function`      | function to start recording        |
-| stopRecording  | `function`      | function to stop recording         |
-| register       | `function`      | function to register video element |
-| ready          | `boolean`       | true when stream is ready          |
+| Property       | Type             | Args                                        | Description                        |
+| -------------- | ---------------- | ------------------------------------------- | ---------------------------------- |
+| mediaRecorder  | `MediaRecorder`  |                                             | MediaRecorder instance ref         |
+| stream         | `MediaStream`    |                                             | MediaStream instance ref           |
+| startRecording | `function`       |                                             | function to start recording        |
+| stopRecording  | `function`       | `function(blob: Blob, url: string) => void` | function to stop recording         |
+| register       | `function`       | `HTMLVideoElement`                          | function to register video element |
+| status         | `RecorderStatus` |                                             | return recorder status             |
+| error          | `RecorderError`  |                                             | return recorder error              |
+
+## Types
+
+#### _`enum RecorderStatus`_ : _`"idle" | "init" | "recording"`_
+
+#### _`enum RecorderError`_ : _`"stream-init" | "recorder-init"`_

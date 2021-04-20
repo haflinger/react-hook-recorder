@@ -12,37 +12,48 @@ type MediaRecorderOptions = {
   bitsPerSecond?: number;
 };
 
+type StopRecordingCallback = (blob: Blob, url: String) => void;
+
+export enum RecorderStatus {
+  "IDLE" = "idle",
+  "INIT" = "init",
+  "RECORDING" = "recording",
+}
+
+export enum RecorderError {
+  "STREAM_INIT" = "stream-init",
+  "RECORDER_INIT" = "recorder-init",
+}
+
 function useRecorder(
   mediaStreamConstraints?: Partial<MediaStreamConstraints>,
   mediaRecorderOptions?: Partial<MediaRecorderOptions>
 ) {
   const mediaRecorderRef = useRef<MediaRecorder>();
   const streamRef = useRef<MediaStream>();
-  const [recording, setRecording] = useState<boolean>(false);
-  const [ready, setReady] = useState<boolean>(false);
+  const [status, setStatus] = useState<RecorderStatus>(RecorderStatus.INIT);
+  const [error, setError] = useState<RecorderError>();
 
   const register = useCallback((element: HTMLVideoElement) => {
-    initStream(element).then(initMediaRecorder);
+    initStream(element).then(initMediaRecorder).catch(setError);
   }, []);
 
   const startRecording = useCallback(() => {
-    setRecording(true);
+    setStatus(RecorderStatus.RECORDING);
     mediaRecorderRef.current?.start();
   }, []);
 
   const stopRecording = useCallback(
-    (callback: (blob: Blob, url: String) => void) => {
-      return () => {
-        setRecording(false);
-        if (mediaRecorderRef.current) {
-          mediaRecorderRef.current.ondataavailable = ({
-            data: blob,
-          }: BlobEvent) => {
-            callback(blob, URL.createObjectURL(blob));
-          };
-          mediaRecorderRef.current?.stop();
-        }
-      };
+    (callback: StopRecordingCallback) => () => {
+      setStatus(RecorderStatus.IDLE);
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.ondataavailable = ({
+          data: blob,
+        }: BlobEvent) => {
+          callback(blob, URL.createObjectURL(blob));
+        };
+        mediaRecorderRef.current?.stop();
+      }
     },
     []
   );
@@ -55,8 +66,8 @@ function useRecorder(
       });
       videoRef.srcObject = streamRef.current;
       return streamRef.current;
-    } catch {
-      throw new Error("Unable to get stream");
+    } catch (err) {
+      throw new Error(RecorderError.STREAM_INIT);
     }
   }, []);
 
@@ -68,12 +79,16 @@ function useRecorder(
       console.warn(`MIME type ${mediaRecorderOptions.mimeType} not supported`);
     }
 
-    const recorder = new MediaRecorder(
-      stream,
-      { ...mediaRecorderOptions } || {}
-    );
-    mediaRecorderRef.current = recorder;
-    setReady(true);
+    try {
+      const recorder = new MediaRecorder(
+        stream,
+        { ...mediaRecorderOptions } || {}
+      );
+      mediaRecorderRef.current = recorder;
+      setStatus(RecorderStatus.IDLE);
+    } catch {
+      throw new Error(RecorderError.RECORDER_INIT);
+    }
   }, []);
 
   if (!navigator.mediaDevices) {
@@ -82,11 +97,12 @@ function useRecorder(
 
   return {
     mediaRecorder: mediaRecorderRef?.current,
+    stream: streamRef?.current,
     startRecording,
     stopRecording,
-    recording,
     register,
-    ready,
+    status,
+    error,
   };
 }
 

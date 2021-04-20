@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook -o ./storybook",
     "prepublish": "rimraf ./dist && tsc"
   },
   "keywords": [
