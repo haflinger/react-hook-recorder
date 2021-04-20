@@ -14,13 +14,13 @@ type MediaRecorderOptions = {
 
 type StopRecordingCallback = (blob: Blob, url: String) => void;
 
-export enum RecorderStatus {
+export const enum RecorderStatus {
   "IDLE" = "idle",
   "INIT" = "init",
   "RECORDING" = "recording",
 }
 
-export enum RecorderError {
+export const enum RecorderError {
   "STREAM_INIT" = "stream-init",
   "RECORDER_INIT" = "recorder-init",
 }
