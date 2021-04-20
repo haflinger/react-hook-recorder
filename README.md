@@ -9,8 +9,8 @@ https://codesandbox.io/s/react-hook-recorder-gbz6z
 ## Example
 
 ```javascript
-import { useState, useCallback } from "react";
-import useRecorder from "react-hook-recorder";
+import React, { useCallback, useState } from "react";
+import useRecorder, { RecorderStatus } from "../useRecorder";
 
 function Recorder() {
   const [url, setUrl] = useState("");
@@ -18,32 +18,37 @@ function Recorder() {
     setUrl(blobUrl);
   }, []);
 
-  const {
-    startRecording,
-    stopRecording,
-    register,
-    recording,
-    ready,
-  } = useRecorder();
+  const { startRecording, stopRecording, register, status } = useRecorder();
 
   return (
     <div>
-      <video ref={register} autoPlay muted>
-        VideoRTC
-      </video>
-      {url && <video controls src={url} />}
-      {!!ready && (
+      <video ref={register} autoPlay muted playsInline />
+      {url && (
         <>
-          <button onClick={startRecording} disabled={recording}>
-            start
+          Recorded video&nbsp;:
+          <video controls src={url} />
+        </>
+      )}
+      {status !== RecorderStatus.INIT && (
+        <>
+          <button
+            onClick={startRecording}
+            disabled={status === RecorderStatus.RECORDING}
+          >
+            Start Recording
           </button>
-          <button onClick={stopRecording(onStop)} disabled={!recording}>
-            stop
+          <button
+            onClick={stopRecording(onStop)}
+            disabled={status !== RecorderStatus.RECORDING}
+          >
+            Stop Recording
           </button>
         </>
       )}
-
-      <div>{recording ? "Recording" : "Standby"}</div>
+      <div>
+        <strong>Status :</strong>&nbsp;
+        {status}
+      </div>
     </div>
   );
 }
