@@ -1,0 +1,5 @@
+.storybook
+src/stories/**/*
+node_modules
+.DS_Store
+storybook
