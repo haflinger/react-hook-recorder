@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es2017", "es7", "es6", "dom"],
-    "module": "commonjs",
+    "target": "ES5",
+    "lib": ["ES2017", "ES7", "ES6", "DOM"],
+    "module": "CommonJS",
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": false,
+    "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "outDir": "./dist"
   },
-  "exclude": ["./src/stories"]
+  "exclude": ["./src/stories", "./dist"]
 }

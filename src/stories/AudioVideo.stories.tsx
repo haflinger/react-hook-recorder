@@ -11,10 +11,7 @@ export default {
   component: AudioVideo,
 };
 
-//👇 We create a “template” of how args map to rendering
-const Template: Story<ComponentProps<typeof AudioVideo>> = (props) => (
-  <AudioVideo />
-);
+const Template: Story<ComponentProps<typeof AudioVideo>> = () => <AudioVideo />;
 
 export const ShowAudioVideo = Template.bind({});
 ShowAudioVideo.args = {};
