@@ -1,13 +1,19 @@
 import React, { useCallback, useState } from "react";
 import useRecorder, { RecorderStatus } from "../useRecorder";
 
-function AudioVideo() {
+function AudioVideo(): React.ReactElement {
   const [url, setUrl] = useState("");
-  const onStop = useCallback((blob, blobUrl) => {
+  const onStop = useCallback((_, blobUrl) => {
     setUrl(blobUrl);
   }, []);
 
-  const { startRecording, stopRecording, register, status } = useRecorder();
+  const {
+    startRecording,
+    stopRecording,
+    register,
+    unregister,
+    status,
+  } = useRecorder();
 
   return (
     <div
@@ -24,6 +30,7 @@ function AudioVideo() {
         playsInline
         style={{ width: 300, height: 300, background: "#000" }}
       />
+
       {url && (
         <>
           Recorded video&nbsp;:
@@ -34,15 +41,31 @@ function AudioVideo() {
         <>
           <button
             onClick={startRecording}
-            disabled={status === RecorderStatus.RECORDING}
+            disabled={[
+              RecorderStatus.RECORDING,
+              RecorderStatus.UNREGISTERED,
+            ].includes(status)}
           >
             Start Recording
           </button>
           <button
             onClick={stopRecording(onStop)}
-            disabled={status !== RecorderStatus.RECORDING}
+            disabled={[
+              RecorderStatus.IDLE,
+              RecorderStatus.UNREGISTERED,
+            ].includes(status)}
           >
             Stop Recording
+          </button>
+          <button
+            onClick={() => unregister()}
+            disabled={[
+              RecorderStatus.INIT,
+              RecorderStatus.UNREGISTERED,
+              RecorderStatus.RECORDING,
+            ].includes(status)}
+          >
+            Unregister
           </button>
         </>
       )}
