@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "lib": ["ES2017", "ES7", "ES6", "DOM"],
     "module": "CommonJS",
     "jsx": "react",
