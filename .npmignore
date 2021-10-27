@@ -2,4 +2,10 @@
 src/stories/**/*
 node_modules
 .DS_Store
-storybook
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
