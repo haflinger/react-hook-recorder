@@ -7,7 +7,8 @@
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o ./storybook",
-    "prepublish": "rimraf ./dist && tsc",
+    "build": "rimraf ./dist && node ./scripts/build.js && tsc --emitDeclarationOnly",
+    "prepublish": "yarn run build",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
@@ -24,35 +25,35 @@
   "author": "HaFLiNGeR <jc.bailliez@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.13.15",
-    "@storybook/addon-actions": "^6.3.4",
-    "@storybook/addon-essentials": "^6.3.4",
-    "@storybook/addon-links": "^6.3.4",
-    "@storybook/react": "^6.3.4",
+    "@babel/core": "^7.15.8",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/react": "^6.3.12",
+    "@types/dom-mediacapture-record": "^1.0.10",
     "@types/prettier": "^2",
     "@types/react": "^17.0.33",
-    "@typescript-eslint/eslint-plugin": "^4.28.3",
-    "@typescript-eslint/parser": "^4.28.3",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
     "babel-loader": "^8.2.3",
+    "esbuild": "^0.13.9",
     "eslint": "^8.1.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "gitmoji-cli": "^4.7.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.6",
     "pinst": "^2.0.0",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "storybook": "^6.3.4",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/haflinger/react-hook-recorder"
   },
   "dependencies": {
-    "@types/dom-mediacapture-record": "^1.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
