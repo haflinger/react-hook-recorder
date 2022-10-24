@@ -25,39 +25,34 @@
   "author": "HaFLiNGeR <jc.bailliez@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.15.8",
-    "@storybook/addon-actions": "^6.3.12",
-    "@storybook/addon-essentials": "^6.3.12",
-    "@storybook/addon-links": "^6.3.12",
-    "@storybook/react": "^6.3.12",
-    "@types/dom-mediacapture-record": "^1.0.10",
-    "@types/prettier": "^2",
-    "@types/react": "^17.0.33",
-    "@typescript-eslint/eslint-plugin": "^5.2.0",
-    "@typescript-eslint/parser": "^5.2.0",
-    "babel-loader": "^8.2.3",
-    "esbuild": "^0.13.9",
-    "eslint": "^8.1.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.26.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^11.2.6",
-    "pinst": "^2.0.0",
-    "prettier": "^2.4.1",
+    "@babel/core": "^7.19.6",
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/react": "^6.5.13",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "babel-loader": "^8.2.5",
+    "esbuild": "^0.15.12",
+    "eslint": "^8.26.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "pinst": "^3.0.0",
+    "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "storybook": "^6.3.4",
-    "typescript": "^4.4.4"
+    "storybook": "^6.5.13",
+    "typescript": "^4.8.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/haflinger/react-hook-recorder"
   },
-  "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
-  "packageManager": "yarn@3.1.0",
+  "packageManager": "yarn@3.2.4",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -68,5 +63,9 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
