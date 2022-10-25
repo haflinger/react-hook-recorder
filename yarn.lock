@@ -3217,6 +3217,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/csf@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@storybook/csf@npm:0.0.1"
+  dependencies:
+    lodash: ^4.17.15
+  checksum: fb57fa028b08a51edf44e1a2bf4be40a4607f5c6ccb58aae8924f476a42b9bbd61a0ad521cfc82196f23e6a912caae0a615e70a755e6800b284c91c509fd2de6
+  languageName: node
+  linkType: hard
+
 "@storybook/docs-tools@npm:6.5.13":
   version: 6.5.13
   resolution: "@storybook/docs-tools@npm:6.5.13"
@@ -3964,6 +3973,17 @@ __metadata:
     typescript:
       optional: true
   checksum: b6f08244059a8e02dbb305e914e6455a2b6bfabe6c0fd355bd3a0a732ed44a503ad47d4beb5f617e29274b5a8b8249d80cf4600babf05d8e35958ff64a546da4
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/experimental-utils@npm:^5.3.0":
+  version: 5.41.0
+  resolution: "@typescript-eslint/experimental-utils@npm:5.41.0"
+  dependencies:
+    "@typescript-eslint/utils": 5.41.0
+  peerDependencies:
+    eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 5c88f66cd7c697919b85dcaec67a98824ae73fa485a2f000ee73698467f0b6b8b49a305b053ba3cef51041aca7500d3532f7cd340b0f67f5eaa0e9e6d699c6d3
   languageName: node
   linkType: hard
 
@@ -7612,6 +7632,20 @@ __metadata:
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
   checksum: f013669c296483559a760648fa06425f161b1aff93c668f14c4561c933d22a7836b745b88a795c53cab929c71513d5fd1f2ffdddff915709f01b77ac25f5b71b
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-storybook@npm:^0.6.6":
+  version: 0.6.6
+  resolution: "eslint-plugin-storybook@npm:0.6.6"
+  dependencies:
+    "@storybook/csf": ^0.0.1
+    "@typescript-eslint/experimental-utils": ^5.3.0
+    requireindex: ^1.1.0
+    ts-dedent: ^2.2.0
+  peerDependencies:
+    eslint: ">=6"
+  checksum: 94c14db656d9ee28a57948d10d61542a9be9691b81272aeebbc9df45a8bd06054c41d8407d22cc6bd6b7cda11800c89f79cb97a6e65edb671f3663b29d6116ce
   languageName: node
   linkType: hard
 
@@ -13105,6 +13139,7 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-react: ^7.31.10
     eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-storybook: ^0.6.6
     husky: ^8.0.1
     lint-staged: ^13.0.3
     pinst: ^3.0.0
@@ -13540,6 +13575,13 @@ __metadata:
   dependencies:
     is-finite: ^1.0.0
   checksum: d2db0b69c5cb0c14dd750036e0abcd6b3c3f7b2da3ee179786b755cf737ca15fa0fff417ca72de33d6966056f4695440e680a352401fc02c95ade59899afbdd0
+  languageName: node
+  linkType: hard
+
+"requireindex@npm:^1.1.0":
+  version: 1.2.0
+  resolution: "requireindex@npm:1.2.0"
+  checksum: 50d8b10a1ff1fdf6aea7a1870bc7bd238b0fb1917d8d7ca17fd03afc38a65dcd7a8a4eddd031f89128b5f0065833d5c92c4fef67f2c04e8624057fe626c9cf94
   languageName: node
   linkType: hard
 
@@ -15182,6 +15224,13 @@ __metadata:
   version: 2.1.1
   resolution: "ts-dedent@npm:2.1.1"
   checksum: f9810da74ffffa51d0ccd87411105ac77ae17c5a5db1bc2fa8f33138928f925673b9a836d513439aace80e6615afb3b018db49e3ec04ede3d6ca2c58beb43f78
+  languageName: node
+  linkType: hard
+
+"ts-dedent@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "ts-dedent@npm:2.2.0"
+  checksum: 93ed8f7878b6d5ed3c08d99b740010eede6bccfe64bce61c5a4da06a2c17d6ddbb80a8c49c2d15251de7594a4f93ffa21dd10e7be75ef66a4dc9951b4a94e2af
   languageName: node
   linkType: hard
 
