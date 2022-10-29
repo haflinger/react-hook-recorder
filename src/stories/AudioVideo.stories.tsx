@@ -1,5 +1,3 @@
-// YourComponent.stories.tsx
-
 import React, { ComponentProps } from "react";
 
 import { Story } from "@storybook/react";
@@ -13,5 +11,5 @@ export default {
 
 const Template: Story<ComponentProps<typeof AudioVideo>> = () => <AudioVideo />;
 
-export const ShowAudioVideo = Template.bind({});
-ShowAudioVideo.args = {};
+export const ShowAudioVideoRecorder = Template.bind({});
+ShowAudioVideoRecorder.args = {};
