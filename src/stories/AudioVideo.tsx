@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import useRecorder, { RecorderStatus } from "../useRecorder";
+import useRecorder from "../useRecorder";
 
 function AudioVideo(): React.ReactElement {
   const [url, setUrl] = useState("");
@@ -12,7 +12,8 @@ function AudioVideo(): React.ReactElement {
     stopRecording,
     register,
     unregister,
-    status,
+    mediaRecorder,
+    state,
   } = useRecorder();
 
   return (
@@ -37,42 +38,22 @@ function AudioVideo(): React.ReactElement {
           <video controls src={url} style={{ width: 300, height: 300 }} />
         </>
       )}
-      {status !== RecorderStatus.INIT && (
+      {!!mediaRecorder && (
         <>
-          <button
-            onClick={startRecording}
-            disabled={[
-              RecorderStatus.RECORDING,
-              RecorderStatus.UNREGISTERED,
-            ].includes(status)}
-          >
+          <button onClick={startRecording} disabled={state === "recording"}>
             Start Recording
           </button>
           <button
             onClick={stopRecording(onStop)}
-            disabled={[
-              RecorderStatus.IDLE,
-              RecorderStatus.UNREGISTERED,
-            ].includes(status)}
+            disabled={state !== "recording"}
           >
             Stop Recording
           </button>
-          <button
-            onClick={() => unregister()}
-            disabled={[
-              RecorderStatus.INIT,
-              RecorderStatus.UNREGISTERED,
-              RecorderStatus.RECORDING,
-            ].includes(status)}
-          >
+          <button onClick={() => unregister()} disabled={state === "recording"}>
             Unregister
           </button>
         </>
       )}
-      <div>
-        <strong>Status :</strong>&nbsp;
-        {status}
-      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const defaultContraints: MediaStreamConstraints = {
   audio: true,
@@ -20,12 +20,14 @@ function useRecorder(
 ): {
   mediaRecorder?: MediaRecorder;
   stream?: MediaStream;
+  state?: RecordingState;
   startRecording: () => void;
   stopRecording: (callback: StopRecordingCallback) => () => void;
   register: (element: HTMLVideoElement) => void;
   unregister: () => void;
 } {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
+  const [state, setState] = useState<RecordingState>();
   const [stream, setStream] = useState<MediaStream>();
   const [element, setElement] = useState<HTMLVideoElement | HTMLAudioElement>();
 
@@ -66,6 +68,7 @@ function useRecorder(
         stream,
         { ...mediaRecorderOptions } || {}
       );
+
       setMediaRecorder(recorder);
     },
     [mediaRecorderOptions]
@@ -99,29 +102,45 @@ function useRecorder(
     setStream(undefined);
   }, [stream, element]);
 
-  const startRecording = useCallback(
-    (timeslice?: number | undefined) => {
-      mediaRecorder?.start(timeslice);
-      console.log(mediaRecorder);
-    },
-    [mediaRecorder]
-  );
+  const startRecording = useCallback(() => {
+    mediaRecorder?.start();
+  }, [mediaRecorder]);
 
   const stopRecording = useCallback(
     (callback: StopRecordingCallback) => () => {
-      if (mediaRecorder) {
-        mediaRecorder.onerror = (e) => console.error(e);
-        mediaRecorder.ondataavailable = ({ data: blob }: BlobEvent) => {
-          callback(blob, URL.createObjectURL(blob));
-        };
-        mediaRecorder?.stop();
-      }
+      const onData = (event: Event) => {
+        const { data: blob } = event as BlobEvent;
+        mediaRecorder?.removeEventListener("dataavailable", onData);
+        callback(blob, URL.createObjectURL(blob));
+      };
+      mediaRecorder?.addEventListener("dataavailable", onData);
+      mediaRecorder?.stop();
     },
     [mediaRecorder]
   );
 
+  useEffect(() => {
+    const events = ["pause", "resume", "start", "stop"];
+
+    const onEvent = (event: Event) => {
+      setState((current) => {
+        const next = (event.target as MediaRecorder).state;
+        return next !== current ? next : current;
+      });
+    };
+
+    events.forEach((event) => mediaRecorder?.addEventListener(event, onEvent));
+
+    return () => {
+      events.forEach((event) =>
+        mediaRecorder?.removeEventListener(event, onEvent)
+      );
+    };
+  }, [mediaRecorder]);
+
   return {
     mediaRecorder,
+    state,
     stream,
     startRecording,
     stopRecording,
