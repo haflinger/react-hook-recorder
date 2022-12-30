@@ -10,7 +10,7 @@ https://codesandbox.io/s/react-hook-recorder-gbz6z
 
 ```javascript
 import React, { useCallback, useState } from "react";
-import useRecorder from "react-hook-recorder";
+import useRecorder, { RecorderStatus } from "react-hook-recorder";
 
 function Recorder() {
   const [url, setUrl] = useState("");
@@ -29,14 +29,14 @@ function Recorder() {
           <video controls src={url} />
         </>
       )}
-      {status !== "init" && (
+      {status !== RecorderStatus.INIT && (
         <>
-          <button onClick={startRecording} disabled={status === "recording"}>
+          <button onClick={startRecording} disabled={status === RecorderStatus.RECORDING}>
             Start Recording
           </button>
           <button
             onClick={stopRecording(onStop)}
-            disabled={status !== "recording"}
+            disabled={status !== RecorderStatus.RECORDING}
           >
             Stop Recording
           </button>
